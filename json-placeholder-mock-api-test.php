@@ -213,7 +213,7 @@ class JSON_Placeholder_Mock_API
 
         wp_enqueue_style(
             PLUGIN_PREFIX . "admin",
-            plugin_dir_url(__FILE__) . "assets/css/admin.css",
+            plugin_dir_url(__FILE__) . "build/css/admin.min.css",
             [],
             "1.0.0",
             "all"
