@@ -1,0 +1,1 @@
+(()=>{"use strict";console.log("Hello World! (from create-block-json-placeholder-mock-block block)")})();

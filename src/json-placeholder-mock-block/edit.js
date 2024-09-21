@@ -3,7 +3,7 @@
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-i18n/
  */
-import { __ } from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n'; // eslint-disable-line import/no-unresolved
 
 /**
  * React hook that is used to mark the block wrapper element.
@@ -11,7 +11,7 @@ import { __ } from '@wordpress/i18n';
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-block-editor/#useblockprops
  */
-import { useBlockProps } from '@wordpress/block-editor';
+import { useBlockProps } from '@wordpress/block-editor'; // eslint-disable-line import/no-unresolved
 
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
@@ -31,11 +31,11 @@ import './editor.scss';
  */
 export default function Edit() {
 	return (
-		<p { ...useBlockProps() }>
-			{ __(
+		<p {...useBlockProps()}>
+			{__(
 				'Json Placeholder Mock Block – hello from the editor!',
 				'json-placeholder-mock-block'
-			) }
+			)}
 		</p>
 	);
 }

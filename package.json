@@ -5,10 +5,18 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "format": "prettier --write \"assets/**/*.js\"",
-    "lint": "eslint \"assets/**/*.js\"",
-    "build": "webpack --mode production",
-    "start": "webpack --watch --progress --mode development"
+    "format-block": "prettier --write \"src/**/*.js\"",
+    "format-plugin-settings": "prettier --write \"assets/**/*.js\"",
+    "format": "run-s format-block format-plugin-settings",
+    "lint-block": "eslint \"src/**/*.js\"",
+    "lint-plugin-settings": "eslint \"assets/**/*.js\"",
+    "lint": "run-s lint-block lint-plugin-settings",
+    "build-block": "wp-scripts build",
+    "build-plugin-settings": "webpack --mode production",
+    "build": "run-s build-block build-plugin-settings",
+    "start-block": "wp-scripts start",
+    "start-plugin-settings": "webpack --watch --progress --mode development",
+    "start": "run-s start-block start-plugin-settings"
   },
   "keywords": [],
   "author": "",
