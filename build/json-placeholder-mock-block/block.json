@@ -3,9 +3,9 @@
   "apiVersion": 3,
   "name": "create-block/json-placeholder-mock-block",
   "version": "0.1.0",
-  "title": "Json Placeholder Mock Block",
+  "title": "JSON Placeholder Block",
   "category": "widgets",
-  "icon": "smiley",
+  "icon": "database-view",
   "description": "Example block scaffolded with Create Block tool.",
   "example": {},
   "supports": {

@@ -27,6 +27,7 @@ class JSON_Placeholder_Mock_API
     public static function init()
     {
         $self = new self();
+        add_action('init', array($self, PLUGIN_PREFIX . 'mock_block_init'));
         add_action('admin_menu', array($self, PLUGIN_PREFIX . 'settings_page'));
         add_action('admin_post_' . PLUGIN_PREFIX . 'save_settings', array(
             $self,
@@ -38,7 +39,7 @@ class JSON_Placeholder_Mock_API
         ));
     }
 
-    public function json_placeholder_mock_block_init() {
+    public function jsonplaceholder_mj_mock_block_init() {
         register_block_type( __DIR__ . '/build/json-placeholder-mock-block' );
     }
 
