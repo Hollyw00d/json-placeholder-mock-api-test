@@ -27,7 +27,6 @@ class JSON_Placeholder_Mock_API
     public static function init()
     {
         $self = new self();
-        add_action('init', array($self, PLUGIN_PREFIX . 'mock_block_init'));
         add_action('rest_api_init', array($self, PLUGIN_PREFIX . 'mock_block_wp_rest'));
         add_action('admin_menu', array($self, PLUGIN_PREFIX . 'settings_page'));
         add_action('admin_post_' . PLUGIN_PREFIX . 'save_settings', array(
@@ -38,10 +37,6 @@ class JSON_Placeholder_Mock_API
             $self,
             PLUGIN_PREFIX . 'enqueue_admin_styles',
         ));
-    }
-
-    public function jsonplaceholder_mj_mock_block_init() {
-        register_block_type( __DIR__ . '/build/json-placeholder-mock-block' );
     }
 
     // https://example.com/wp-json/jsonplaceholder/v1/jsonplaceholder-option
@@ -248,4 +243,5 @@ class JSON_Placeholder_Mock_API
 }
 
 JSON_Placeholder_Mock_API::init();
+require_once 'block-render.php';
 ?>

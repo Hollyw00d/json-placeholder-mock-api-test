@@ -1,29 +1,12 @@
 {
-	"$schema": "https://schemas.wp.org/trunk/block.json",
-	"apiVersion": 3,
-	"name": "create-block/json-placeholder-mock-block",
-	"version": "0.1.0",
-	"title": "Json Placeholder Mock Block",
+	"apiVersion": 2,
+	"name": "namespace/json-placeholder-mock-block",
+	"title": "JSON Placeholder Mock Block",
 	"category": "widgets",
-	"icon": "database",
-	"description": "Example block scaffolded with Create Block tool.",
-	"attributes": {
-		"jsonResult": {
-			"type": "object",
-			"default": ""
-		},
-		"isErrorMsg": {
-			"type": "boolean",
-			"default": "false"
-		}
-	},
-	"example": {},
-	"supports": {
-		"html": false
-	},
-	"textdomain": "json-placeholder-mock-block",
+	"icon": "smiley",
+	"description": "A block that fetches JSON placeholder data.",
+	"script": "file:./index.js",
 	"editorScript": "file:./index.js",
-	"editorStyle": "file:./index.css",
 	"style": "file:./style-index.css",
-	"viewScript": "file:./view.js"
+	"editorStyle": "file:./editor-style.css"
 }

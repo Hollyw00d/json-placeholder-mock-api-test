@@ -1,4 +1,5 @@
 import { useBlockProps } from '@wordpress/block-editor'; // eslint-disable-line import/no-unresolved
+import JsonResultComponent from './components/JsonResult/JsonResultComponent.jsx';
 
 // eslint-disable-next-line react/prop-types
 export default function Save({ attributes }) {
@@ -7,7 +8,13 @@ export default function Save({ attributes }) {
 	return (
 		<div {...useBlockProps.save()}>
 			{/* eslint-disable-next-line react/prop-types */}
-			{isErrorMsg ? <div>Error!</div> : <div>Success!</div>}
+			{isErrorMsg ? (
+				<div>Error!</div>
+			) : (
+				<div>
+					<JsonResultComponent jsonResult={jsonResult} />
+				</div>
+			)}
 		</div>
 	);
 }
