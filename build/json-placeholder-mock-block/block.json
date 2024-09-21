@@ -5,12 +5,16 @@
   "version": "0.1.0",
   "title": "Json Placeholder Mock Block",
   "category": "widgets",
-  "icon": "smiley",
+  "icon": "database",
   "description": "Example block scaffolded with Create Block tool.",
   "attributes": {
-    "jsonPlaceholderUrl": {
-      "type": "string",
+    "jsonResult": {
+      "type": "object",
       "default": ""
+    },
+    "isErrorMsg": {
+      "type": "boolean",
+      "default": "false"
     }
   },
   "example": {},
