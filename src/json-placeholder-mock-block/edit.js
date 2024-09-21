@@ -1,4 +1,4 @@
-import { useEffect, useState } from '@wordpress/element'; // eslint-disable-line import/no-extraneous-dependencies
+import { useEffect } from '@wordpress/element'; // eslint-disable-line import/no-extraneous-dependencies
 import { __ } from '@wordpress/i18n'; // eslint-disable-line import/no-unresolved
 import { useBlockProps } from '@wordpress/block-editor'; // eslint-disable-line import/no-unresolved
 import './editor.scss';
