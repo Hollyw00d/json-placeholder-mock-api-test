@@ -16,6 +16,7 @@
   "ignorePatterns": [
     "node_modules",
     "build",
+    "dist",
     "package.json",
     "package-lock.json"
   ]
