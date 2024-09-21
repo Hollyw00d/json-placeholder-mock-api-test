@@ -28,6 +28,7 @@ class JSON_Placeholder_Mock_API
     {
         $self = new self();
         add_action('init', array($self, PLUGIN_PREFIX . 'mock_block_init'));
+        add_action('rest_api_init', array($self, PLUGIN_PREFIX . 'mock_block_wp_rest'));
         add_action('admin_menu', array($self, PLUGIN_PREFIX . 'settings_page'));
         add_action('admin_post_' . PLUGIN_PREFIX . 'save_settings', array(
             $self,
@@ -42,6 +43,26 @@ class JSON_Placeholder_Mock_API
     public function jsonplaceholder_mj_mock_block_init() {
         register_block_type( __DIR__ . '/build/json-placeholder-mock-block' );
     }
+
+    // https://example.com/wp-json/jsonplaceholder/v1/jsonplaceholder-option
+    public function jsonplaceholder_mj_mock_block_wp_rest() {
+        register_rest_route('jsonplaceholder/v1', '/jsonplaceholder-option', array(
+            'methods'               => 'GET',
+            'callback'              => array($this, 'get_jsonplaceholder_option'),
+            'permission_callback'   => '__return_true'
+        ));
+    }
+
+    public function get_jsonplaceholder_option() {
+        // Get the option value from wp_options
+        $option_value = get_option('jsonplaceholder_mj_jsonplaceholder_org');
+
+        if ($option_value) {
+            return new WP_REST_Response($option_value, 200);
+        } else {
+            return new WP_REST_Response('Option not found', 404);
+        }
+    }    
 
     public function jsonplaceholder_mj_settings_page()
     {
@@ -62,48 +83,48 @@ class JSON_Placeholder_Mock_API
 
         $options = get_option(PLUGIN_PREFIX . 'jsonplaceholder_org');
         ?>
-  <div class="wrap">
-   <h2><?php echo PLUGIN_NAME; ?></h2>
+        <div class="wrap">
+        <h2><?php echo PLUGIN_NAME; ?></h2>
 
-   <?php if (isset($_GET['status']) && $_GET['status'] == 'success'): ?>
-    <div id="message" class="updated notice notice-success is-dismissible">
-        <p><?php _e(
-            'Settings saved successfully.',
-            PLUGIN_PREFIX . 'notice'
-        ); ?></p>
-    </div>
-   <?php elseif (isset($_GET['status']) && $_GET['status'] == 'error'):
-       $error_msg = isset($_SESSION['flash_error'])
-           ? $_SESSION['flash_error']
-           : ''; ?>
-    <div id="message" class="error notice notice-error is-dismissible">
-     <p><?php _e(
-         "Invalid input. {$error_msg}",
-         PLUGIN_PREFIX . 'notice'
-     ); ?></p>
-    </div>
-   <?php unset($_SESSION['flash_error']);
-   endif; ?>
+        <?php if (isset($_GET['status']) && $_GET['status'] == 'success'): ?>
+            <div id="message" class="updated notice notice-success is-dismissible">
+                <p><?php _e(
+                    'Settings saved successfully.',
+                    PLUGIN_PREFIX . 'notice'
+                ); ?></p>
+            </div>
+        <?php elseif (isset($_GET['status']) && $_GET['status'] == 'error'):
+            $error_msg = isset($_SESSION['flash_error'])
+                ? $_SESSION['flash_error']
+                : ''; ?>
+            <div id="message" class="error notice notice-error is-dismissible">
+            <p><?php _e(
+                "Invalid input. {$error_msg}",
+                PLUGIN_PREFIX . 'notice'
+            ); ?></p>
+            </div>
+        <?php unset($_SESSION['flash_error']);
+        endif; ?>
 
-   <form action="<?php echo esc_url(
-       admin_url('admin-post.php')
-   ); ?>" method="post">
-    <input type="hidden" name="action" value="<?php echo PLUGIN_PREFIX .
-        'save_settings'; ?>">
+        <form action="<?php echo esc_url(
+            admin_url('admin-post.php')
+        ); ?>" method="post">
+            <input type="hidden" name="action" value="<?php echo PLUGIN_PREFIX .
+                'save_settings'; ?>">
 
-    <?php
-    wp_nonce_field(PLUGIN_PREFIX . 'save_settings_nonce');
-    $this->jsonplaceholder_url_mj($options);
-    ?>
+            <?php
+            wp_nonce_field(PLUGIN_PREFIX . 'save_settings_nonce');
+            $this->jsonplaceholder_url_mj($options);
+            ?>
 
-    <p>
-        <input name="submit" class="button button-primary" type="submit" value="<?php esc_attr_e(
-            'Save'
-        ); ?>" />
-    </p>
-   </form>
-  </div>
-  <?php
+            <p>
+                <input name="submit" class="button button-primary" type="submit" value="<?php esc_attr_e(
+                    'Save'
+                ); ?>" />
+            </p>
+        </form>
+        </div>
+        <?php
     }
 
     public function jsonplaceholder_url_mj($options)
@@ -116,23 +137,23 @@ class JSON_Placeholder_Mock_API
                 ? 'field-error'
                 : '';
         ?>
-  <h3>JSONPLaceHolder.org URL with JSON Data</h3>
-  
-  <div>
-   <p>Please enter a single URL from <a href="https://www.jsonplaceholder.org/" target="_blank">jsonplaceholder.org</a> that displays JSON like the examples below:</p>
-   <ol>
-    <li><a href="https://jsonplaceholder.org/posts" target="_blank">https://jsonplaceholder.org/posts</a></li>
-    <li><a href="https://jsonplaceholder.org/posts/1" target="_blank">https://jsonplaceholder.org/posts/1</a></li>
-   </ol>
-  </div>
-  
-    <label for="<?php echo PLUGIN_PREFIX; ?>jsonplaceholder_url">
-    <h4>JSON URL</h4>            
-    <p>
-        <input type="text" name="<?php echo PLUGIN_PREFIX; ?>jsonplaceholder_url" id="<?php echo PLUGIN_PREFIX; ?>jsonplaceholder_url" class="<?php echo $error_class; ?>" value="<?php echo esc_attr($jsonplaceholder_url); ?>" size="50" />
-    </p>
-    </label>
-  <?php
+        <h3>JSONPLaceHolder.org URL with JSON Data</h3>
+        
+        <div>
+        <p>Please enter a single URL from <a href="https://www.jsonplaceholder.org/" target="_blank">jsonplaceholder.org</a> that displays JSON like the examples below:</p>
+        <ol>
+            <li><a href="https://jsonplaceholder.org/posts" target="_blank">https://jsonplaceholder.org/posts</a></li>
+            <li><a href="https://jsonplaceholder.org/posts/1" target="_blank">https://jsonplaceholder.org/posts/1</a></li>
+        </ol>
+        </div>
+        
+            <label for="<?php echo PLUGIN_PREFIX; ?>jsonplaceholder_url">
+            <h4>JSON URL</h4>            
+            <p>
+                <input type="text" name="<?php echo PLUGIN_PREFIX; ?>jsonplaceholder_url" id="<?php echo PLUGIN_PREFIX; ?>jsonplaceholder_url" class="<?php echo $error_class; ?>" value="<?php echo esc_attr($jsonplaceholder_url); ?>" size="50" />
+            </p>
+            </label>
+        <?php
     }
 
     public function jsonplaceholder_mj_save_settings()
