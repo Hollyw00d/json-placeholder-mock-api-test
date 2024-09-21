@@ -3,10 +3,16 @@
   "apiVersion": 3,
   "name": "create-block/json-placeholder-mock-block",
   "version": "0.1.0",
-  "title": "JSON Placeholder Block",
+  "title": "Json Placeholder Mock Block",
   "category": "widgets",
-  "icon": "database-view",
+  "icon": "smiley",
   "description": "Example block scaffolded with Create Block tool.",
+  "attributes": {
+    "jsonPlaceholderUrl": {
+      "type": "string",
+      "default": ""
+    }
+  },
   "example": {},
   "supports": {
     "html": false

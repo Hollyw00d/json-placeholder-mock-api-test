@@ -1,41 +1,42 @@
-/**
- * Retrieves the translation of text.
- *
- * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-i18n/
- */
+import { useState, useMemo } from '@wordpress/element'; // eslint-disable-line import/no-extraneous-dependencies
 import { __ } from '@wordpress/i18n'; // eslint-disable-line import/no-unresolved
-
-/**
- * React hook that is used to mark the block wrapper element.
- * It provides all the necessary props like the class name.
- *
- * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-block-editor/#useblockprops
- */
 import { useBlockProps } from '@wordpress/block-editor'; // eslint-disable-line import/no-unresolved
-
-/**
- * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
- * Those files can contain any CSS code that gets applied to the editor.
- *
- * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
- */
 import './editor.scss';
 
-/**
- * The edit function describes the structure of your block in the context of the
- * editor. This represents what the editor will render when the block is used.
- *
- * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-edit-save/#edit
- *
- * @return {Element} Element to render.
- */
-export default function Edit() {
+// eslint-disable-next-line no-unused-vars, react/prop-types
+export default function Edit({ attributes, setAttributes, clientId }) {
+	const [jsonVal, setJsonVal] = useState(null);
+	const wpRestJsonData = `${window.location.origin}/wp-json/jsonplaceholder/v1/jsonplaceholder-option`;
+
+	const { jsonPlaceholderUrl } = attributes; // eslint-disable-line react/prop-types
+
+	// useMemo to fetch data only when jsonplaceholderUrl changes
+	useMemo(() => {
+		const fetchData = async () => {
+			try {
+				const response = await fetch(wpRestJsonData);
+				const data = await response.json();
+				const jsonplaceholderUrl = data.jsonplaceholder_url;
+				setJsonVal(jsonplaceholderUrl);
+				if (jsonplaceholderUrl) {
+					setAttributes({ jsonPlaceholderUrl: jsonplaceholderUrl });
+				}
+			} catch (error) {
+				setJsonVal('JSON data not loading correctly!');
+				setAttributes({
+					jsonPlaceholderUrl: 'JSON data not loading correctly!'
+				});
+			}
+		};
+
+		if (!jsonPlaceholderUrl) {
+			fetchData();
+		}
+	}, [jsonVal, jsonPlaceholderUrl, setAttributes]); // eslint-disable-line react-hooks/exhaustive-deps
+
 	return (
-		<p {...useBlockProps()}>
-			{__(
-				'Json Placeholder Mock Block – hello from the editor!',
-				'json-placeholder-mock-block'
-			)}
-		</p>
+		<div {...useBlockProps()}>
+			{jsonPlaceholderUrl && <div>{jsonPlaceholderUrl}</div>}
+		</div>
 	);
 }
