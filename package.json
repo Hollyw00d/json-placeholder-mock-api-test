@@ -1,5 +1,5 @@
 {
-  "name": "json-placeholder-mock-api-test",
+  "name": "json-placeholder-block",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -16,7 +16,8 @@
     "build": "run-s build-block build-plugin-settings",
     "start-block": "wp-scripts start",
     "start-plugin-settings": "webpack --watch --progress --mode development",
-    "start": "run-s start-block start-plugin-settings"
+    "start": "run-s start-block start-plugin-settings",
+    "packages-update": "wp-scripts packages-update"
   },
   "keywords": [],
   "author": "",
