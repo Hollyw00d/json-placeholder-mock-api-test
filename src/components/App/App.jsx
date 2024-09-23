@@ -27,7 +27,7 @@ export default function App() {
 			{Array.isArray(jsonData) ? (
 				<Posts jsonData={jsonData} />
 			) : (
-				<p>{jsonData}</p>
+				<h2>{jsonData}</h2>
 			)}
 		</div>
 	);

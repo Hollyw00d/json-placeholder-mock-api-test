@@ -80,7 +80,7 @@ function App() {
   }, [wpRestJsonData]);
   return /*#__PURE__*/React.createElement("div", null, Array.isArray(jsonData) ? /*#__PURE__*/React.createElement(_Posts_Posts_jsx__WEBPACK_IMPORTED_MODULE_1__["default"], {
     jsonData: jsonData
-  }) : /*#__PURE__*/React.createElement("p", null, jsonData));
+  }) : /*#__PURE__*/React.createElement("h2", null, jsonData));
 }
 
 /***/ }),
