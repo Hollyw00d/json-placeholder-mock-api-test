@@ -1,11 +1,10 @@
 // eslint-disable-next-line react/prop-types
 export default function Posts({ jsonData }) {
-	// console.log(Array.isArray(jsonData));
-	const posts10OrLess = jsonData.slice(0, 10); // eslint-disable-line react/prop-types
+	const posts10OrLess = jsonData?.slice(0, 10); // eslint-disable-line react/prop-types
 
 	return (
 		<div>
-			<h2>JSONPlaceholder.org Posts</h2>
+			<h2>JSONPlaceholder.org Posts (10 or Less)</h2>
 			{posts10OrLess.map((post) => (
 				<div key={post.id}>
 					<h3>Post ID: {post.id}</h3>

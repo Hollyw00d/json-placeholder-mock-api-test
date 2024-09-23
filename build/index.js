@@ -39,7 +39,7 @@ function App() {
     }
     function _fetchData() {
       _fetchData = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-        var response, data, jsonplaceholderUrl, getJsonResponse, getJsonData;
+        var response, data, jsonplaceholderUrl, getJsonResponse, getJsonData, arr;
         return _regeneratorRuntime().wrap(function _callee$(_context) {
           while (1) switch (_context.prev = _context.next) {
             case 0:
@@ -61,7 +61,13 @@ function App() {
               return getJsonResponse.json();
             case 13:
               getJsonData = _context.sent;
-              setJsonData(getJsonData);
+              if (!Array.isArray(getJsonData)) {
+                arr = [];
+                arr.push(getJsonData);
+                setJsonData(arr);
+              } else {
+                setJsonData(getJsonData);
+              }
               _context.next = 20;
               break;
             case 17:
@@ -98,10 +104,9 @@ __webpack_require__.r(__webpack_exports__);
 // eslint-disable-next-line react/prop-types
 function Posts(_ref) {
   var jsonData = _ref.jsonData;
-  // console.log(Array.isArray(jsonData));
-  var posts10OrLess = jsonData.slice(0, 10); // eslint-disable-line react/prop-types
+  var posts10OrLess = jsonData === null || jsonData === void 0 ? void 0 : jsonData.slice(0, 10); // eslint-disable-line react/prop-types
 
-  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h2", null, "JSONPlaceholder.org Posts"), posts10OrLess.map(function (post) {
+  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h2", null, "JSONPlaceholder.org Posts (10 or Less)"), posts10OrLess.map(function (post) {
     return /*#__PURE__*/React.createElement("div", {
       key: post.id
     }, /*#__PURE__*/React.createElement("h3", null, "Post ID: ", post.id), /*#__PURE__*/React.createElement("h4", null, "Post Title: ", post.title), /*#__PURE__*/React.createElement("p", null, "Post URL: ", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("a", {

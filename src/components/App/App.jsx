@@ -13,7 +13,13 @@ export default function App() {
 				const jsonplaceholderUrl = data.jsonplaceholder_url;
 				const getJsonResponse = await fetch(jsonplaceholderUrl);
 				const getJsonData = await getJsonResponse.json();
-				setJsonData(getJsonData);
+				if (!Array.isArray(getJsonData)) {
+					const arr = [];
+					arr.push(getJsonData);
+					setJsonData(arr);
+				} else {
+					setJsonData(getJsonData);
+				}
 			} catch (error) {
 				setJsonData('No data found!');
 			}
