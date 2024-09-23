@@ -24,8 +24,7 @@ define('PLUGIN_PREFIX', 'jsonplaceholder_mj_');
 
 class JSON_Placeholder_Mock_API
 {
-    public static function init()
-    {
+    public static function init() {
         $self = new self();
         add_action('rest_api_init', array($self, PLUGIN_PREFIX . 'mock_block_wp_rest'));
         add_action('admin_menu', array($self, PLUGIN_PREFIX . 'settings_page'));
@@ -37,6 +36,7 @@ class JSON_Placeholder_Mock_API
             $self,
             PLUGIN_PREFIX . 'enqueue_admin_styles',
         ));
+        add_action('init', array($self, 'jsonplaceholder_mj_block'));
         add_filter('plugin_action_links_' . plugin_basename(__FILE__), array(
             $self,
             PLUGIN_PREFIX . 'plugin_settings_link'
@@ -47,12 +47,12 @@ class JSON_Placeholder_Mock_API
     public function jsonplaceholder_mj_mock_block_wp_rest() {
         register_rest_route('jsonplaceholder/v1', '/jsonplaceholder-option', array(
             'methods'               => 'GET',
-            'callback'              => array($this, 'get_jsonplaceholder_option'),
+            'callback'              => array($this, 'jsonplaceholder_mj_get_option'),
             'permission_callback'   => '__return_true'
         ));
     }
 
-    public function get_jsonplaceholder_option() {
+    public function jsonplaceholder_mj_get_option() {
         // Get the option value from wp_options
         $option_value = get_option('jsonplaceholder_mj_jsonplaceholder_org');
 
@@ -63,8 +63,7 @@ class JSON_Placeholder_Mock_API
         }
     }    
 
-    public function jsonplaceholder_mj_settings_page()
-    {
+    public function jsonplaceholder_mj_settings_page() {
         add_options_page(
             PLUGIN_NAME,
             PLUGIN_NAME,
@@ -74,8 +73,7 @@ class JSON_Placeholder_Mock_API
         );
     }
 
-    public function jsonplaceholder_mj_settings_page_html()
-    {
+    public function jsonplaceholder_mj_settings_page_html() {
         if (!current_user_can('manage_options')) {
             return;
         }
@@ -113,7 +111,7 @@ class JSON_Placeholder_Mock_API
 
             <?php
             wp_nonce_field(PLUGIN_PREFIX . 'save_settings_nonce');
-            $this->jsonplaceholder_url_mj($options);
+            $this->jsonplaceholder_mj_url($options);
             ?>
 
             <p>
@@ -126,8 +124,7 @@ class JSON_Placeholder_Mock_API
         <?php
     }
 
-    public function jsonplaceholder_url_mj($options)
-    {
+    public function jsonplaceholder_mj_url($options) {
         $jsonplaceholder_url = isset($options['jsonplaceholder_url'])
             ? esc_attr($options['jsonplaceholder_url'])
             : '';
@@ -157,8 +154,7 @@ class JSON_Placeholder_Mock_API
         <?php
     }
 
-    public function jsonplaceholder_mj_save_settings()
-    {
+    public function jsonplaceholder_mj_save_settings() {
         if (!current_user_can('manage_options')) {
             return;
         }
@@ -231,8 +227,7 @@ class JSON_Placeholder_Mock_API
         exit();
     }
 
-    public function jsonplaceholder_mj_enqueue_admin_styles($hook)
-    {
+    public function jsonplaceholder_mj_enqueue_admin_styles($hook) {
         // Only enqueue the CSS on the plugin settings page
         if ($hook !== 'settings_page_' . PLUGIN_SLUG) {
             return;
@@ -252,6 +247,10 @@ class JSON_Placeholder_Mock_API
         $settings_link = '<a href="' . esc_url($settings_url) . '">' . __('Settings') . '</a>';
         array_unshift($links, $settings_link);
         return $links;
+    }
+
+    public function jsonplaceholder_mj_block() {
+        register_block_type( __DIR__ . '/build' );
     }
 }
 
