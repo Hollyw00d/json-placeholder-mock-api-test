@@ -1,19 +1,34 @@
-import { useState } from '@wordpress/element';
+import { useState, useEffect } from '@wordpress/element';
+import Posts from '../Posts/Posts.jsx';
 
 export default function App() {
-	const [name, setName] = useState('');
+	const [jsonData, setJsonData] = useState('Data loading...');
+	const wpRestJsonData = `${window.location.origin}/wp-json/jsonplaceholder/v1/jsonplaceholder-option`;
 
-	const handleChange = (e) => {
-		e.preventDefault();
-		setName(e.target.value);
-	};
+	useEffect(() => {
+		async function fetchData() {
+			try {
+				const response = await fetch(wpRestJsonData);
+				const data = await response.json();
+				const jsonplaceholderUrl = data.jsonplaceholder_url;
+				const getJsonResponse = await fetch(jsonplaceholderUrl);
+				const getJsonData = await getJsonResponse.json();
+				setJsonData(getJsonData);
+			} catch (error) {
+				setJsonData('No data found!');
+			}
+		}
+
+		fetchData();
+	}, [wpRestJsonData]);
 
 	return (
-		<div className="wp-block-create-block-react-on-frontend-block">
-			<h2>
-				Hello <span className="mark-text">{name}</span> in React app
-			</h2>
-			<input type="text" onChange={handleChange} placeholder="name" />
+		<div>
+			{Array.isArray(jsonData) ? (
+				<Posts jsonData={jsonData} />
+			) : (
+				<p>{jsonData}</p>
+			)}
 		</div>
 	);
 }
