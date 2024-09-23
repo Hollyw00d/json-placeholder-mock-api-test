@@ -1,7 +1,7 @@
 <?php
 /*
  * Plugin Name:     JSON Placeholder Block
- * Description:     A simple plugin that pulls in post data from JSONPlaceholder (jsonplaceholder.org) in a JSON format and adds a block where you can search the content as using React.
+ * Description:     A simple plugin that pulls in post data from JSONPlaceholder (jsonplaceholder.org) in a JSON format and adds a block where you can view this content on the front-end and back-end using React.
  * Author:          Matt Jennings
  * Author URI:      https://www.mattjennings.net/
  * Text Domain:     json-placeholder-block
