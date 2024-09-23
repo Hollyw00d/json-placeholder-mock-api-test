@@ -185,7 +185,7 @@ class JSON_Placeholder_Mock_API
             ? $_POST[PLUGIN_PREFIX . 'jsonplaceholder_url']
             : '';
         $valid = true;
-        $jsonplaceholder_posts_url = '/\bhttps?:\/\/jsonplaceholder\.org\/posts\/([1-9][0-9]?|100)$/i';
+        $jsonplaceholder_posts_url = '/\bhttps?:\/\/jsonplaceholder\.org\/posts(\/([1-9][0-9]?|100))?$/i';
 
         $url = trim($jsonplaceholder_url);
 
