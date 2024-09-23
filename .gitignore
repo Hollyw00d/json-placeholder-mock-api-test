@@ -22,6 +22,9 @@ composer.phar
 *.sln
 *.sw?
 
+# Output of `wp-scripts plugin-zip`
+*.zip
+
 # Env variables
 .env
 

@@ -16,7 +16,9 @@
     "build": "run-s build-block build-plugin-settings",
     "start-block": "wp-scripts start",
     "start-plugin-settings": "webpack --watch --progress --mode development",
-    "start": "run-s start-block start-plugin-settings"
+    "start": "run-s start-block start-plugin-settings",
+    "packages-update": "wp-scripts packages-update",
+		"plugin-zip": "wp-scripts plugin-zip"
   },
   "keywords": [],
   "author": "",
