@@ -11,7 +11,7 @@ export default function Posts({ jsonData }) {
 					<h3>Post ID: {post.id}</h3>
 					<h4>Post Title: {post.title}</h4>
 					<p>
-						Post URL:{' '}
+						Post URL: <br />
 						<a href={post.url} target="_blank" rel="noreferrer">
 							{post.url}
 						</a>

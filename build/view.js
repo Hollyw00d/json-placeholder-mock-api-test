@@ -104,7 +104,7 @@ function Posts(_ref) {
   return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h2", null, "JSONPlaceholder.org Posts"), posts10OrLess.map(function (post) {
     return /*#__PURE__*/React.createElement("div", {
       key: post.id
-    }, /*#__PURE__*/React.createElement("h3", null, "Post ID: ", post.id), /*#__PURE__*/React.createElement("h4", null, "Post Title: ", post.title), /*#__PURE__*/React.createElement("p", null, "Post URL:", ' ', /*#__PURE__*/React.createElement("a", {
+    }, /*#__PURE__*/React.createElement("h3", null, "Post ID: ", post.id), /*#__PURE__*/React.createElement("h4", null, "Post Title: ", post.title), /*#__PURE__*/React.createElement("p", null, "Post URL: ", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("a", {
       href: post.url,
       target: "_blank",
       rel: "noreferrer"
