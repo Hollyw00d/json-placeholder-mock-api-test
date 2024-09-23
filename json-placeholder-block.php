@@ -1,10 +1,10 @@
 <?php
 /*
- * Plugin Name:     JSON Placeholder Mock API Test
- * Description:     A simple plugin that pulls in plugins data from JSONPlaceholder (jsonplaceholder.org) and adds a block where you can search the content as using React.
+ * Plugin Name:     JSON Placeholder Block
+ * Description:     A simple plugin that pulls in post data from JSONPlaceholder (jsonplaceholder.org) in a JSON format and adds a block where you can search the content as using React.
  * Author:          Matt Jennings
  * Author URI:      https://www.mattjennings.net/
- * Text Domain:     json-placeholder-mock-api-test
+ * Text Domain:     json-placeholder-block
  * Version:         0.1.0
  */
 
@@ -18,8 +18,8 @@ if (!session_id()) {
 }
 
 // Global vars
-define('PLUGIN_NAME', 'JSON Placeholder Mock API Test');
-define('PLUGIN_SLUG', 'json-placeholder-mock-api-test');
+define('PLUGIN_NAME', 'JSON Placeholder Block');
+define('PLUGIN_SLUG', 'json-placeholder-block');
 define('PLUGIN_PREFIX', 'jsonplaceholder_mj_');
 
 class JSON_Placeholder_Mock_API
@@ -36,6 +36,10 @@ class JSON_Placeholder_Mock_API
         add_action('admin_enqueue_scripts', array(
             $self,
             PLUGIN_PREFIX . 'enqueue_admin_styles',
+        ));
+        add_filter('plugin_action_links_' . plugin_basename(__FILE__), array(
+            $self,
+            PLUGIN_PREFIX . 'plugin_settings_link'
         ));
     }
 
@@ -135,10 +139,12 @@ class JSON_Placeholder_Mock_API
         <h3>JSONPLaceHolder.org URL with JSON Data</h3>
         
         <div>
-        <p>Please enter a single URL from <a href="https://www.jsonplaceholder.org/" target="_blank">jsonplaceholder.org</a> that displays JSON like the examples below:</p>
+        <p>Please enter a single URL from <a href="https://www.jsonplaceholder.org/" target="_blank">jsonplaceholder.org</a> that displays posts using JSON like the examples below:</p>
         <ol>
             <li><a href="https://jsonplaceholder.org/posts" target="_blank">https://jsonplaceholder.org/posts</a></li>
             <li><a href="https://jsonplaceholder.org/posts/1" target="_blank">https://jsonplaceholder.org/posts/1</a></li>
+            <li><a href="https://jsonplaceholder.org/posts/100" target="_blank">https://jsonplaceholder.org/posts/100</a></li>
+            <li>Or look at <a href="https://www.jsonplaceholder.org/#posts" target="_blank">documentation on JSONPlaceholder.org about how to view posts or a post URL in a JSON format</a>. 
         </ol>
         </div>
         
@@ -179,7 +185,7 @@ class JSON_Placeholder_Mock_API
             ? $_POST[PLUGIN_PREFIX . 'jsonplaceholder_url']
             : '';
         $valid = true;
-        $url_pattern = '/\bhttps?:\/\/[^\s\/$.?#].[^\s]*$/i';
+        $jsonplaceholder_posts_url = '/\bhttps?:\/\/jsonplaceholder\.org\/posts\/([1-9][0-9]?|100)$/i';
 
         $url = trim($jsonplaceholder_url);
 
@@ -187,10 +193,10 @@ class JSON_Placeholder_Mock_API
             $_SESSION['flash_error'] =
                 'The <strong>JSON URL</strong> field must not be empty.';
             $valid = false;
-        } elseif (!preg_match($url_pattern, $url)) {
+        } elseif (!preg_match($jsonplaceholder_posts_url, $url)) {
             $_SESSION[
                 'flash_error'
-            ] = "The <code>{$url}</code> value in the <strong>JSON URL</strong> is not a valid URL.";
+            ] = "The <code>{$url}</code> value in the <strong>JSON URL</strong> is not a valid <a href=\"jsonplaceholder.org\" target=\"blank\">jsonplaceholder.org</a> URL to show a post or posts in a JSON format (<a href=\"https://www.jsonplaceholder.org/#posts\" target=\"_blank\">see documentation</a>).";
             $valid = false;
         }
 
@@ -240,8 +246,14 @@ class JSON_Placeholder_Mock_API
             'all'
         );
     }
+
+    public function jsonplaceholder_mj_plugin_settings_link($links) {
+        $settings_url = admin_url('options-general.php?page=' . PLUGIN_SLUG);
+        $settings_link = '<a href="' . esc_url($settings_url) . '">' . __('Settings') . '</a>';
+        array_unshift($links, $settings_link);
+        return $links;
+    }
 }
 
 JSON_Placeholder_Mock_API::init();
-require_once 'block-render.php';
 ?>
