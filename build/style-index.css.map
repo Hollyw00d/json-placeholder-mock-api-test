@@ -1,0 +1,1 @@
+{"version":3,"file":"./style-index.css","mappings":";;;AAGE;EACE;AAFJ,C","sources":["webpack://json-placeholder-block/./src/style.scss"],"sourcesContent":["$dark-gray: #616161;\n\n.wp-block-create-block-jsonplaceholder-posts {\n  img {\n    border: 1px solid $dark-gray;\n  }\n}"],"names":[],"sourceRoot":""}
