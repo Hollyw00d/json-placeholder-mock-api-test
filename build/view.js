@@ -101,15 +101,49 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ Posts)
 /* harmony export */ });
-/* harmony import */ var _SelectPostByID_SelectPostByID_jsx__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../SelectPostByID/SelectPostByID.jsx */ "./src/components/SelectPostByID/SelectPostByID.jsx");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
+function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 
 
 // eslint-disable-next-line react/prop-types
 function Posts(_ref) {
   var jsonData = _ref.jsonData;
   var posts10OrLess = jsonData === null || jsonData === void 0 ? void 0 : jsonData.slice(0, 10); // eslint-disable-line react/prop-types
+  var _useState = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(posts10OrLess),
+    _useState2 = _slicedToArray(_useState, 2),
+    getPosts = _useState2[0],
+    setGetPosts = _useState2[1];
+  var selectPostHandler = function selectPostHandler(e) {
+    var selectPostID = e.target.value;
+    console.log(selectPostID);
+    var arr = [];
+    var postByID = posts10OrLess.find(function (post) {
+      return post.id = selectPostID;
+    });
+    console.log(postByID);
+    console.log(Array.isArray(arr));
+    var postByIdInArr = [].concat(arr, [postByID]);
+    console.log(postByIdInArr);
+    console.log(Array.isArray(postByIdInArr));
+    setGetPosts(postByIdInArr);
 
-  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h2", null, "JSONPlaceholder.org Posts (10 or Less)"), posts10OrLess.length > 1 && /*#__PURE__*/React.createElement(_SelectPostByID_SelectPostByID_jsx__WEBPACK_IMPORTED_MODULE_0__["default"], null), /*#__PURE__*/React.createElement("h3", null, "Posts"), posts10OrLess.map(function (post) {
+    // console.log(postByIDInArr);
+  };
+  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h2", null, "JSONPlaceholder.org Posts (10 or Less)"), getPosts.length > 1 && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("h3", null, "Select Post By ID"), /*#__PURE__*/React.createElement("p", null, /*#__PURE__*/React.createElement("select", {
+    name: "selectPostById",
+    onChange: selectPostHandler
+  }, getPosts.map(function (post) {
+    return /*#__PURE__*/React.createElement("option", {
+      key: post.id,
+      value: post.id
+    }, "Post ID: ", post.id);
+  })))), /*#__PURE__*/React.createElement("h3", null, "Posts"), getPosts.map(function (post) {
     return /*#__PURE__*/React.createElement("div", {
       key: post.id
     }, /*#__PURE__*/React.createElement("h4", null, "Post ID: ", post.id), /*#__PURE__*/React.createElement("h5", null, "Post Title: ", post.title), /*#__PURE__*/React.createElement("p", null, "Post URL: ", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("a", {
@@ -121,22 +155,6 @@ function Posts(_ref) {
       alt: post.title
     })));
   }));
-}
-
-/***/ }),
-
-/***/ "./src/components/SelectPostByID/SelectPostByID.jsx":
-/*!**********************************************************!*\
-  !*** ./src/components/SelectPostByID/SelectPostByID.jsx ***!
-  \**********************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ SelectPostByID)
-/* harmony export */ });
-function SelectPostByID() {
-  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h3", null, "Select Post By ID"));
 }
 
 /***/ }),
