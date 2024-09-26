@@ -1,5 +1,6 @@
 import { useState } from '@wordpress/element';
 import OnChangeAlert from '../OnChangeAlert/OnChangeAlert.jsx';
+import ResetButton from '../ResetButton/ResetButton.jsx';
 
 // eslint-disable-next-line react/prop-types
 export default function Posts({ jsonData }) {
@@ -57,11 +58,7 @@ export default function Posts({ jsonData }) {
 					<div role="alert" aria-live="polite">
 						{selectChanged && (
 							<>
-								<p>
-									<button type="button" onClick={resetBtnHandler}>
-										Reset
-									</button>
-								</p>
+								<ResetButton resetBtnHandler={resetBtnHandler} />
 								<OnChangeAlert getPosts={getPosts} />
 							</>
 						)}
