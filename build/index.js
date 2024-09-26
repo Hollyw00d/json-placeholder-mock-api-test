@@ -114,31 +114,24 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 // eslint-disable-next-line react/prop-types
 function Posts(_ref) {
   var jsonData = _ref.jsonData;
-  var posts10OrLess = jsonData === null || jsonData === void 0 ? void 0 : jsonData.slice(0, 10); // eslint-disable-line react/prop-types
+  var posts10OrLess = jsonData.slice(0, 10); // eslint-disable-line react/prop-types
   var _useState = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(posts10OrLess),
     _useState2 = _slicedToArray(_useState, 2),
     getPosts = _useState2[0],
     setGetPosts = _useState2[1];
   var selectPostHandler = function selectPostHandler(e) {
-    var selectPostID = e.target.value;
-    console.log(selectPostID);
+    var selectPostID = Number(e.target.value);
     var arr = [];
     var postByID = posts10OrLess.find(function (post) {
-      return post.id = selectPostID;
+      return post.id === selectPostID;
     });
-    console.log(postByID);
-    console.log(Array.isArray(arr));
     var postByIdInArr = [].concat(arr, [postByID]);
-    console.log(postByIdInArr);
-    console.log(Array.isArray(postByIdInArr));
     setGetPosts(postByIdInArr);
-
-    // console.log(postByIDInArr);
   };
-  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h2", null, "JSONPlaceholder.org Posts (10 or Less)"), getPosts.length > 1 && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("h3", null, "Select Post By ID"), /*#__PURE__*/React.createElement("p", null, /*#__PURE__*/React.createElement("select", {
+  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h2", null, "JSONPlaceholder.org Posts (10 or Less)"), posts10OrLess.length > 1 && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("h3", null, "Select Post By ID"), /*#__PURE__*/React.createElement("p", null, /*#__PURE__*/React.createElement("select", {
     name: "selectPostById",
     onChange: selectPostHandler
-  }, getPosts.map(function (post) {
+  }, posts10OrLess.map(function (post) {
     return /*#__PURE__*/React.createElement("option", {
       key: post.id,
       value: post.id
