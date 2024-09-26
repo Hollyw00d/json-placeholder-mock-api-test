@@ -6,8 +6,11 @@ export default function Posts({ jsonData }) {
 	const posts10OrLess = jsonData.slice(0, 10); // eslint-disable-line react/prop-types
 	const [getPosts, setGetPosts] = useState(posts10OrLess);
 	const [selectChanged, setSelectChanged] = useState(false);
+	const [selectedOption, setSelectedOption] = useState('');
+
 	const selectPostHandler = (e) => {
 		const val = e.target.value;
+		setSelectedOption(val);
 
 		if (!val) {
 			setGetPosts(posts10OrLess);
@@ -23,6 +26,11 @@ export default function Posts({ jsonData }) {
 		setSelectChanged(true);
 	};
 
+	const resetBtnHandler = () => {
+		setSelectedOption('');
+		setGetPosts(posts10OrLess);
+	};
+
 	return (
 		<div>
 			<h2>JSONPlaceholder.org Posts (10 or Less)</h2>
@@ -32,7 +40,11 @@ export default function Posts({ jsonData }) {
 					<h3>Select Post By ID</h3>
 
 					<p>
-						<select name="selectPostById" onChange={selectPostHandler}>
+						<select
+							name="selectPostById"
+							onChange={selectPostHandler}
+							value={selectedOption}
+						>
 							<option value="">Show All Posts</option>
 							{posts10OrLess.map((post) => (
 								<option key={post.id} value={post.id}>
@@ -43,7 +55,16 @@ export default function Posts({ jsonData }) {
 					</p>
 
 					<div role="alert" aria-live="polite">
-						{selectChanged && <OnChangeAlert getPosts={getPosts} />}
+						{selectChanged && (
+							<>
+								<p>
+									<button type="button" onClick={resetBtnHandler}>
+										Reset
+									</button>
+								</p>
+								<OnChangeAlert getPosts={getPosts} />
+							</>
+						)}
 					</div>
 				</>
 			)}
