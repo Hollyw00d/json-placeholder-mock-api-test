@@ -252,7 +252,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 // eslint-disable-next-line react/prop-types
 function SettingsPageLink() {
-  return /*#__PURE__*/React.createElement("p", null, "Settings Page Link");
+  var settingsPageLink = "".concat(window.location.origin, "/wp-admin/options-general.php?page=json-placeholder-block");
+  return /*#__PURE__*/React.createElement("div", {
+    className: "settings-page-link"
+  }, /*#__PURE__*/React.createElement("p", null, /*#__PURE__*/React.createElement("a", {
+    href: settingsPageLink,
+    target: "_blank",
+    rel: "noreferrer"
+  }, "JSONPlaceholder.org Posts Block Settings Page Link")));
 }
 
 /***/ }),
