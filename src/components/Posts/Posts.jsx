@@ -1,9 +1,10 @@
 import { useState } from '@wordpress/element';
 import OnChangeAlert from '../OnChangeAlert/OnChangeAlert.jsx';
 import ResetButton from '../ResetButton/ResetButton.jsx';
+import SettingsPageLink from '../SettingsPageLink/SettingsPageLink.jsx';
 
 // eslint-disable-next-line react/prop-types
-export default function Posts({ jsonData }) {
+export default function Posts({ jsonData, isEditPage }) {
 	const posts10OrLess = jsonData.slice(0, 10); // eslint-disable-line react/prop-types
 	const [getPosts, setGetPosts] = useState(posts10OrLess);
 	const [selectChanged, setSelectChanged] = useState(false);
@@ -34,6 +35,8 @@ export default function Posts({ jsonData }) {
 
 	return (
 		<div>
+			{isEditPage && <SettingsPageLink />}
+
 			<h2>JSONPlaceholder.org Posts (10 or Less)</h2>
 
 			{posts10OrLess.length > 1 && (

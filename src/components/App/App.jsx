@@ -1,7 +1,8 @@
 import { useState, useEffect } from '@wordpress/element';
 import Posts from '../Posts/Posts.jsx';
 
-export default function App() {
+// eslint-disable-next-line react/prop-types
+export default function App({ isEditPage }) {
 	const [jsonData, setJsonData] = useState('Data loading...');
 	const wpRestJsonData = `${window.location.origin}/wp-json/jsonplaceholder/v1/jsonplaceholder-option`;
 
@@ -31,7 +32,7 @@ export default function App() {
 	return (
 		<div>
 			{Array.isArray(jsonData) ? (
-				<Posts jsonData={jsonData} />
+				<Posts jsonData={jsonData} isEditPage={isEditPage} />
 			) : (
 				<h2>{jsonData}</h2>
 			)}

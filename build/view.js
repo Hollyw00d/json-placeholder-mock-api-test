@@ -27,7 +27,10 @@ function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" !=
 function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 
 
-function App() {
+
+// eslint-disable-next-line react/prop-types
+function App(_ref) {
+  var isEditPage = _ref.isEditPage;
   var _useState = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)('Data loading...'),
     _useState2 = _slicedToArray(_useState, 2),
     jsonData = _useState2[0],
@@ -85,7 +88,8 @@ function App() {
     fetchData();
   }, [wpRestJsonData]);
   return /*#__PURE__*/React.createElement("div", null, Array.isArray(jsonData) ? /*#__PURE__*/React.createElement(_Posts_Posts_jsx__WEBPACK_IMPORTED_MODULE_1__["default"], {
-    jsonData: jsonData
+    jsonData: jsonData,
+    isEditPage: isEditPage
   }) : /*#__PURE__*/React.createElement("h2", null, jsonData));
 }
 
@@ -132,6 +136,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _OnChangeAlert_OnChangeAlert_jsx__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../OnChangeAlert/OnChangeAlert.jsx */ "./src/components/OnChangeAlert/OnChangeAlert.jsx");
 /* harmony import */ var _ResetButton_ResetButton_jsx__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../ResetButton/ResetButton.jsx */ "./src/components/ResetButton/ResetButton.jsx");
+/* harmony import */ var _SettingsPageLink_SettingsPageLink_jsx__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../SettingsPageLink/SettingsPageLink.jsx */ "./src/components/SettingsPageLink/SettingsPageLink.jsx");
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
@@ -142,9 +147,11 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 
 
 
+
 // eslint-disable-next-line react/prop-types
 function Posts(_ref) {
-  var jsonData = _ref.jsonData;
+  var jsonData = _ref.jsonData,
+    isEditPage = _ref.isEditPage;
   var posts10OrLess = jsonData.slice(0, 10); // eslint-disable-line react/prop-types
   var _useState = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(posts10OrLess),
     _useState2 = _slicedToArray(_useState, 2),
@@ -178,7 +185,7 @@ function Posts(_ref) {
     setSelectedOption('');
     setGetPosts(posts10OrLess);
   };
-  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h2", null, "JSONPlaceholder.org Posts (10 or Less)"), posts10OrLess.length > 1 && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("h3", null, "Select Post By ID"), /*#__PURE__*/React.createElement("p", null, /*#__PURE__*/React.createElement("select", {
+  return /*#__PURE__*/React.createElement("div", null, isEditPage && /*#__PURE__*/React.createElement(_SettingsPageLink_SettingsPageLink_jsx__WEBPACK_IMPORTED_MODULE_3__["default"], null), /*#__PURE__*/React.createElement("h2", null, "JSONPlaceholder.org Posts (10 or Less)"), posts10OrLess.length > 1 && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("h3", null, "Select Post By ID"), /*#__PURE__*/React.createElement("p", null, /*#__PURE__*/React.createElement("select", {
     name: "selectPostById",
     onChange: selectPostHandler,
     value: selectedOption
@@ -229,6 +236,23 @@ function ResetButton(_ref) {
     type: "button",
     onClick: resetBtnHandler
   }, "Reset"));
+}
+
+/***/ }),
+
+/***/ "./src/components/SettingsPageLink/SettingsPageLink.jsx":
+/*!**************************************************************!*\
+  !*** ./src/components/SettingsPageLink/SettingsPageLink.jsx ***!
+  \**************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ SettingsPageLink)
+/* harmony export */ });
+// eslint-disable-next-line react/prop-types
+function SettingsPageLink() {
+  return /*#__PURE__*/React.createElement("p", null, "Settings Page Link");
 }
 
 /***/ }),
@@ -379,7 +403,10 @@ __webpack_require__.r(__webpack_exports__);
 _wordpress_dom_ready__WEBPACK_IMPORTED_MODULE_1__(function () {
   // eslint-disable-next-line no-undef
   var root = (0,react_dom_client__WEBPACK_IMPORTED_MODULE_0__.createRoot)(document.getElementsByClassName('wp-block-create-block-jsonplaceholder-posts')[0]);
-  root.render(/*#__PURE__*/React.createElement(_components_App_App_jsx__WEBPACK_IMPORTED_MODULE_2__["default"], null), root);
+  var isEditPage = false;
+  root.render(/*#__PURE__*/React.createElement(_components_App_App_jsx__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    isEditPage: isEditPage
+  }), root);
 });
 })();
 

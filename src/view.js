@@ -9,5 +9,8 @@ domReady(() => {
 			'wp-block-create-block-jsonplaceholder-posts'
 		)[0]
 	);
-	root.render(<App />, root);
+
+	const isEditPage = false;
+
+	root.render(<App isEditPage={isEditPage} />, root);
 });

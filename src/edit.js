@@ -4,9 +4,11 @@ import App from './components/App/App.jsx';
 import './editor.scss';
 
 export default function Edit() {
+	const isEditPage = true;
+
 	return (
 		<div {...useBlockProps()}>
-			<App />
+			<App isEditPage={isEditPage} />
 		</div>
 	);
 }
