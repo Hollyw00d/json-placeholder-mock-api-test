@@ -1,16 +1,26 @@
 import { useState } from '@wordpress/element';
+import OnChangeAlert from '../OnChangeAlert/OnChangeAlert.jsx';
 
 // eslint-disable-next-line react/prop-types
 export default function Posts({ jsonData }) {
 	const posts10OrLess = jsonData.slice(0, 10); // eslint-disable-line react/prop-types
 	const [getPosts, setGetPosts] = useState(posts10OrLess);
+	const [selectChanged, setSelectChanged] = useState(false);
 	const selectPostHandler = (e) => {
-		const selectPostID = Number(e.target.value);
+		const val = e.target.value;
+
+		if (!val) {
+			setGetPosts(posts10OrLess);
+			return;
+		}
+
+		const selectPostID = Number(val);
 		const arr = [];
 		const postByID = posts10OrLess.find((post) => post.id === selectPostID);
 		const postByIdInArr = [...arr, postByID];
 
 		setGetPosts(postByIdInArr);
+		setSelectChanged(true);
 	};
 
 	return (
@@ -23,6 +33,7 @@ export default function Posts({ jsonData }) {
 
 					<p>
 						<select name="selectPostById" onChange={selectPostHandler}>
+							<option value="">Show All Posts</option>
 							{posts10OrLess.map((post) => (
 								<option key={post.id} value={post.id}>
 									Post ID: {post.id}
@@ -30,6 +41,10 @@ export default function Posts({ jsonData }) {
 							))}
 						</select>
 					</p>
+
+					<div role="alert" aria-live="polite">
+						{selectChanged && <OnChangeAlert getPosts={getPosts} />}
+					</div>
 				</>
 			)}
 

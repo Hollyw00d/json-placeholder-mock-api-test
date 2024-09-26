@@ -15,8 +15,8 @@ export default function App() {
 				const getJsonData = await getJsonResponse.json();
 				if (!Array.isArray(getJsonData)) {
 					const arr = [];
-					arr.push(getJsonData);
-					setJsonData(arr);
+					const jsonDataArr = [...arr, getJsonData];
+					setJsonData(jsonDataArr);
 				} else {
 					setJsonData(getJsonData);
 				}
