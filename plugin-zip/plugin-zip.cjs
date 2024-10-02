@@ -15,6 +15,10 @@ const ig = ignore().add(ignoreArray);
 const output = fs.createWriteStream(outputZipFile);
 const archive = archiver('zip', { zlib: { level: 9 } });
 
+if (fs.existsSync(`${folderName}.zip`)) {
+	fs.unlinkSync(`${folderName}.zip`);
+}
+
 output.on('close', () => {
 	// eslint-disable-next-line no-console
 	console.log(

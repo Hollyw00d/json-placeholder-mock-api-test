@@ -6,6 +6,7 @@ const ignoreArray = [
 	'.gitignore',
 	'.prettierignore',
 	'.prettierrc.json',
+	'assets',
 	'node_modules',
 	'package-lock.json',
 	'package.json',
