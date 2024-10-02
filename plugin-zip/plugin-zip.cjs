@@ -18,7 +18,7 @@ const archive = archiver('zip', { zlib: { level: 9 } });
 output.on('close', () => {
 	// eslint-disable-next-line no-console
 	console.log(
-		`Success! ${folderName}.zip zipped file is created in your root directory.`
+		`Success! Zipped file ${folderName}.zip has been created at:\n${outputZipFile}`
 	);
 });
 archive.on('error', (err) => {
