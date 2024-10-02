@@ -9,6 +9,7 @@ const ignoreArray = [
 	'node_modules',
 	'package-lock.json',
 	'package.json',
-	'plugin-zip'
+	'plugin-zip',
+	'webpack.config.cjs'
 ];
 module.exports = ignoreArray;
