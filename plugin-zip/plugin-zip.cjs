@@ -7,6 +7,7 @@ const ignoreArray = require('./ignore-array.cjs');
 const directoryToZip = path.resolve(process.cwd());
 const folderName = path.basename(directoryToZip);
 const outputZipFile = path.join(directoryToZip, `${folderName}.zip`);
+let logOnce = false;
 
 // Ignore files/directories
 const ig = ignore().add(ignoreArray);
@@ -19,17 +20,24 @@ if (fs.existsSync(`${folderName}.zip`)) {
 	fs.unlinkSync(`${folderName}.zip`);
 }
 
-output.on('close', () => {
-	// eslint-disable-next-line no-console
-	console.log(
-		`Success! Zipped file ${folderName}.zip has been created at:\n${outputZipFile}`
-	);
-});
+// eslint-disable-next-line no-console
+console.log(`Creating archive for \`${folderName}\` plugin... 🎁\n\n`);
+
 archive.on('error', (err) => {
 	throw err;
 });
 
 archive.pipe(output);
+
+// archive.on('entry', () => {
+// 	// eslint-disable-next-line no-console
+// 	console.log('Adding all folders and files in zipped file EXCEPT\n\n');
+// });
+
+output.on('close', () => {
+	// eslint-disable-next-line no-console
+	console.log(`\nDone. \`${folderName}.zip\` is ready! 🎉\n`);
+});
 
 const addDirectory = (dirPath) => {
 	fs.readdirSync(dirPath).forEach((file) => {
@@ -37,6 +45,16 @@ const addDirectory = (dirPath) => {
 		const relativePath = path.relative(directoryToZip, fullPath);
 
 		if (ig.ignores(relativePath)) return;
+
+		if (!logOnce) {
+			// eslint-disable-next-line no-console
+			console.log('Adding all folders and files in zipped file EXCEPT:\n');
+			ignoreArray.forEach((dirOrFile) => {
+				// eslint-disable-next-line no-console
+				console.log(`  Ignored \`${dirOrFile}\`.`);
+			});
+			logOnce = true;
+		}
 
 		const stats = fs.statSync(fullPath);
 		if (stats.isDirectory()) {
