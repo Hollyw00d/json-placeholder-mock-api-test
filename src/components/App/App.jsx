@@ -1,3 +1,4 @@
+/* eslint-disable import/extensions */
 import { useState, useEffect } from '@wordpress/element';
 import Posts from '../Posts/Posts.jsx';
 
