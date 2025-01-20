@@ -1,6 +1,7 @@
 const TerserPlugin = require('terser-webpack-plugin'); // eslint-disable-line import/no-extraneous-dependencies
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin'); // eslint-disable-line import/no-extraneous-dependencies
 const MiniCssExtractPlugin = require('mini-css-extract-plugin'); // eslint-disable-line import/no-extraneous-dependencies
+const sass = require('sass'); // eslint-disable-line import/no-extraneous-dependencies
 const path = require('path');
 
 module.exports = {
@@ -41,7 +42,8 @@ module.exports = {
 					{
 						loader: 'sass-loader',
 						options: {
-							sourceMap: true // Enable source maps for SASS
+							sourceMap: true, // Enable source maps for SASS
+							implementation: sass // Use Dart Sass explicitly
 						}
 					}
 				]
