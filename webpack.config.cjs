@@ -41,6 +41,7 @@ module.exports = {
 					{
 						loader: 'sass-loader',
 						options: {
+							// The `sass` package is Dart Sass, so no additional configuration is needed.
 							sourceMap: true // Enable source maps for SASS
 						}
 					}
