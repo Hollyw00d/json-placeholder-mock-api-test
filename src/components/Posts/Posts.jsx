@@ -58,13 +58,10 @@ export default function Posts({ jsonData, isEditPage }) {
 						</select>
 					</p>
 
+					{selectChanged && <ResetButton resetBtnHandler={resetBtnHandler} />}
+
 					<div role="alert" aria-live="polite">
-						{selectChanged && (
-							<>
-								<ResetButton resetBtnHandler={resetBtnHandler} />
-								<OnChangeAlert getPosts={getPosts} />
-							</>
-						)}
+						{selectChanged && <OnChangeAlert getPosts={getPosts} />}
 					</div>
 				</>
 			)}
