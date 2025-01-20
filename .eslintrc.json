@@ -3,7 +3,7 @@
     "browser": true,
     "node": true
   },
-  "extends": ["wesbos", "prettier"],
+  "extends": ["airbnb", "prettier"],
   "parserOptions": {
     "sourceType": "module"
   },
