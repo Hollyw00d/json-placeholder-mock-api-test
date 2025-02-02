@@ -1,6 +1,6 @@
-/* eslint-disable import/extensions, react/react-in-jsx-scope, react/jsx-filename-extension */
+/* eslint-disable react/jsx-filename-extension */
 import { useBlockProps } from '@wordpress/block-editor'; // eslint-disable-line import/no-unresolved
-import App from './components/App/App.jsx';
+import App from './components/App/App';
 
 import './editor.scss';
 
