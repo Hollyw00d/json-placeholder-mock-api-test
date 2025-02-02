@@ -1,7 +1,7 @@
 import { useState } from '@wordpress/element';
-import OnChangeAlert from '../OnChangeAlert/OnChangeAlert.jsx';
-import ResetButton from '../ResetButton/ResetButton.jsx';
-import SettingsPageLink from '../SettingsPageLink/SettingsPageLink.jsx';
+import OnChangeAlert from '../OnChangeAlert/OnChangeAlert';
+import ResetButton from '../ResetButton/ResetButton';
+import SettingsPageLink from '../SettingsPageLink/SettingsPageLink';
 
 // eslint-disable-next-line react/prop-types
 export default function Posts({ jsonData, isEditPage }) {
