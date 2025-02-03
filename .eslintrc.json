@@ -18,7 +18,13 @@
 		"class-methods-use-this": "off",
 		"no-plusplus": "off",
 		"react/jsx-props-no-spreading": "off",
-		"react/react-in-jsx-scope": "off"
+		"react/react-in-jsx-scope": "off",
+		"import/no-unresolved": [
+			"error",
+			{
+				"ignore": ["^@wordpress/"]
+			}
+		]
 	},
 	"ignorePatterns": [
 		"node_modules",
