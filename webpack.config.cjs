@@ -36,13 +36,13 @@ module.exports = {
 					{
 						loader: 'css-loader',
 						options: {
-							sourceMap: true // Enable source maps for CSS
+							sourceMap: true
 						}
 					},
 					{
 						loader: 'sass-loader',
 						options: {
-							sourceMap: true, // Enable source maps for SASS
+							sourceMap: true,
 							implementation: sass // Use Dart Sass explicitly
 						}
 					}
