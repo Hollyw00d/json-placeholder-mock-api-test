@@ -84,7 +84,6 @@ function pluginZip() {
 		// Write the updated ZIP back to the same location
 		zip.writeZip(zipFilePath);
 
-		// console.log(`\nDone. When '${newZipFileName}' is unzipped, the folder will be named '${newFolderName}' 🎉!`);
 		console.log(
 			`\nDone. Zipped folder is renamed to have WordPress plugin version number ('${newZipFileName}') and when it's unzipped you will see a folder named '${newFolderName}'! ${scriptGlobals.emojis['party-popper']}`
 		);
