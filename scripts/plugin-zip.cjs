@@ -1,69 +1,95 @@
+const AdmZip = require('adm-zip');
 const fs = require('fs');
 const path = require('path');
-const archiver = require('archiver');
-const ignore = require('ignore');
-const ignoreArray = require('./plugin-zip-ignore-array.cjs');
+const { execSync } = require('child_process');
+const scriptGlobals = require('./script-globals.json');
 
-const directoryToZip = path.resolve(process.cwd());
-const folderName = path.basename(directoryToZip);
-const outputZipFile = path.join(directoryToZip, `${folderName}.zip`);
-let logOnce = false;
+/*
+ * Zip WP plugin with steps below:
+ * - `npm run plugin-zip` using `@wordpress/scripts`
+ * - Rename plugin file name from something like `my-plugin.zip`
+ *   to `my-plugin.0.1.0.zip` which shows plugin version name
+ * - Make it so that when `my-plugin.0.1.0.zip` is unzipped
+ *   a folder named `my-plugin`appears without the version name
+ */
+function pluginZip() {
+	// Get plugin configuration from package.json
+	const packageJsonPath = path.join(process.cwd(), 'package.json');
+	const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'));
+	const pluginVersion = packageJson?.version;
+	const pluginUrl = packageJson.config?.['plugin-url'];
+	const pluginRoot = packageJson.config?.['plugin-root'];
 
-// Ignore files/directories
-const ig = ignore().add(ignoreArray);
+	if (!pluginVersion || !pluginUrl || !pluginRoot) {
+		console.error(
+			`All plugin metadata ('version', 'config[plugin-url]', 'config[plugin-root]') is missing in package.json!`
+		);
+		process.exit(1);
+	}
 
-// Create a file to stream archive data to
-const output = fs.createWriteStream(outputZipFile);
-const archive = archiver('zip', { zlib: { level: 9 } });
+	// Run `wp-scripts plugin-zip` to create the initial ZIP file
+	execSync('wp-scripts plugin-zip', { stdio: 'inherit' });
 
-if (fs.existsSync(`${folderName}.zip`)) {
-	fs.unlinkSync(`${folderName}.zip`);
+	// Locate the generated ZIP file
+	const pluginDir = path.basename(process.cwd());
+	const zipPath = `${pluginDir}.zip`;
+	if (!fs.existsSync(zipPath)) {
+		console.error(`ZIP file not found: ${zipPath}`);
+		process.exit(1);
+	}
+
+	// Rename the ZIP file to include the version number
+	const newZipFileName = `${pluginDir}.${pluginVersion}.zip`;
+	fs.renameSync(zipPath, newZipFileName);
+	const zipFilePath = path.join(process.cwd(), newZipFileName);
+
+	try {
+		// Load the ZIP file
+		const zip = new AdmZip(zipFilePath);
+
+		// Extract the names of the files and folders inside the ZIP
+		let zipEntries = zip.getEntries();
+
+		// Identify if there is a root folder or top-level files
+		const folderEntries = zipEntries.filter((entry) => entry.isDirectory);
+		const fileEntries = zipEntries.filter((entry) => !entry.isDirectory);
+
+		// If there's no root folder, create one programmatically
+		let rootFolderName;
+		if (folderEntries.length > 0) {
+			rootFolderName = folderEntries[0].entryName; // Assume the first folder is the root
+		} else {
+			rootFolderName = `${pluginDir}/`; // Create a virtual root folder
+			fileEntries.map((entry) => ({
+				...entry,
+				entryName: `${rootFolderName}${entry.entryName}`
+			}));
+		}
+
+		// Desired folder name inside the ZIP
+		const newFolderName = `${pluginDir}`;
+
+		// Update the folder structure
+		console.log(`\nMore work in progress...`);
+		zipEntries = zipEntries.map((entry) =>
+			entry.entryName.startsWith(rootFolderName)
+				? {
+						...entry,
+						entryName: entry.entryName.replace(rootFolderName, `${newFolderName}/`)
+					}
+				: entry
+		);
+
+		// Write the updated ZIP back to the same location
+		zip.writeZip(zipFilePath);
+
+		// console.log(`\nDone. When '${newZipFileName}' is unzipped, the folder will be named '${newFolderName}' 🎉!`);
+		console.log(
+			`\nDone. Zipped folder is renamed to have WordPress plugin version number ('${newZipFileName}') and when it's unzipped you will see a folder named '${newFolderName}'! ${scriptGlobals.emojis['party-popper']}`
+		);
+	} catch (error) {
+		console.error('An error occurred:', error.message);
+	}
 }
 
-// eslint-disable-next-line no-console
-console.log(`Creating archive for \`${folderName}\` plugin... 🎁\n\n`);
-
-archive.on('error', (err) => {
-	throw err;
-});
-
-archive.pipe(output);
-
-// archive.on('entry', () => {
-// 	// eslint-disable-next-line no-console
-// 	console.log('Adding all folders and files in zipped file EXCEPT\n\n');
-// });
-
-output.on('close', () => {
-	// eslint-disable-next-line no-console
-	console.log(`\nDone. \`${folderName}.zip\` is ready! 🎉\n`);
-});
-
-const addDirectory = (dirPath) => {
-	fs.readdirSync(dirPath).forEach((file) => {
-		const fullPath = path.join(dirPath, file);
-		const relativePath = path.relative(directoryToZip, fullPath);
-
-		if (ig.ignores(relativePath)) return;
-
-		if (!logOnce) {
-			// eslint-disable-next-line no-console
-			console.log('Adding all folders and files in zipped file EXCEPT:\n');
-			ignoreArray.forEach((dirOrFile) => {
-				// eslint-disable-next-line no-console
-				console.log(`  Ignored \`${dirOrFile}\`.`);
-			});
-			logOnce = true;
-		}
-
-		const stats = fs.statSync(fullPath);
-		if (stats.isDirectory()) {
-			addDirectory(fullPath);
-		} else {
-			archive.file(fullPath, { name: relativePath });
-		}
-	});
-};
-
-addDirectory(directoryToZip);
-archive.finalize();
+pluginZip();
