@@ -10,7 +10,6 @@ module.exports = {
 		errorDetails: true // Show error details
 	},
 	entry: {
-		block: './assets/js/block.js',
 		admin: './assets/js/admin.js'
 	},
 	output: {
