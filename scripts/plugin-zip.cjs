@@ -1,8 +1,8 @@
 const fs = require('fs');
 const path = require('path');
-const archiver = require('archiver'); // eslint-disable-line import/no-extraneous-dependencies
-const ignore = require('ignore'); // eslint-disable-line import/no-extraneous-dependencies
-const ignoreArray = require('./ignore-array.cjs');
+const archiver = require('archiver');
+const ignore = require('ignore');
+const ignoreArray = require('./plugin-zip-ignore-array.cjs');
 
 const directoryToZip = path.resolve(process.cwd());
 const folderName = path.basename(directoryToZip);

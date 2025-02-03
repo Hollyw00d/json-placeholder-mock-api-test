@@ -3,17 +3,23 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "config": {
+    "plugin-url": "https://github.com/Hollyw00d/json-placeholder-block",
+    "plugin-root": "json-placeholder-block.php"
+  },
   "type": "module",
   "scripts": {
-    "format": "prettier --write \"**/*.{js,jsx}\"",
-    "lint": "eslint . --ext .js,.jsx",
+    "format": "prettier --write \"**/*.{js,jsx,cjs}\"",
+    "lint": "eslint . --ext .js,.jsx,.cjs",
     "build-block": "wp-scripts build",
     "build-plugin-settings": "webpack --mode production",
     "build": "run-s build-block build-plugin-settings",
     "start-block": "wp-scripts start",
     "start-plugin-settings": "webpack --watch --progress --mode development",
     "start": "run-s start-block start-plugin-settings",
-    "packages-update": "wp-scripts packages-update"
+    "verupdate": "node scripts/version-update.cjs",
+    "plugin-zip-script": "node scripts/plugin-zip.cjs",
+    "plugin-zip": "run-s verupdate plugin-zip-script"
   },
   "keywords": [],
   "author": "",
@@ -45,10 +51,12 @@
   },
   "dependencies": {
     "@wordpress/element": "6.16.0",
+    "archiver": "7.0.1",
     "bootstrap": "5.3.3",
     "css-minimizer-webpack-plugin": "7.0.0",
     "debounce": "2.2.0",
     "eslint": "8.57.1",
+    "ignore": "7.0.3",
     "mini-css-extract-plugin": "2.9.2",
     "sass": "1.83.4",
     "terser-webpack-plugin": "5.3.11"
