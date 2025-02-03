@@ -12,6 +12,7 @@ const scriptGlobals = require('./script-globals.json');
  * - Make it so that when `my-plugin.0.1.0.zip` is unzipped
  *   a folder named `my-plugin`appears without the version name
  */
+/* eslint-disable no-console */
 function pluginZip() {
 	// Get plugin configuration from package.json
 	const packageJsonPath = path.join(process.cwd(), 'package.json');
@@ -93,3 +94,4 @@ function pluginZip() {
 }
 
 pluginZip();
+/* eslint-enable no-console */
