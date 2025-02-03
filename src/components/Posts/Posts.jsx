@@ -3,9 +3,8 @@ import OnChangeAlert from '../OnChangeAlert/OnChangeAlert';
 import ResetButton from '../ResetButton/ResetButton';
 import SettingsPageLink from '../SettingsPageLink/SettingsPageLink';
 
-// eslint-disable-next-line react/prop-types
 export default function Posts({ jsonData, isEditPage }) {
-	const posts10OrLess = jsonData.slice(0, 10); // eslint-disable-line react/prop-types
+	const posts10OrLess = jsonData.slice(0, 10);
 	const [getPosts, setGetPosts] = useState(posts10OrLess);
 	const [selectChanged, setSelectChanged] = useState(false);
 	const [selectedOption, setSelectedOption] = useState('');

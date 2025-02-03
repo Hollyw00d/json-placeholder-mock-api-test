@@ -1,8 +1,6 @@
-/* eslint-disable import/extensions */
 import { useState, useEffect } from '@wordpress/element';
 import Posts from '../Posts/Posts.jsx';
 
-// eslint-disable-next-line react/prop-types
 export default function App({ isEditPage }) {
 	const [jsonData, setJsonData] = useState('Data loading...');
 	const wpRestJsonData = `${window.location.origin}/wp-json/jsonplaceholder/v1/jsonplaceholder-option`;

@@ -1,4 +1,3 @@
-// eslint-disable-next-line react/prop-types
 export default function SettingsPageLink() {
 	const settingsPageLink = `${window.location.origin}/wp-admin/options-general.php?page=json-placeholder-block`;
 
