@@ -11,6 +11,7 @@
   "scripts": {
     "format": "prettier --write \"**/*.{js,jsx,cjs}\"",
     "lint": "eslint . --ext .js,.jsx,.cjs",
+    "unused": "node scripts/unused-packages.cjs",
     "build-block": "wp-scripts build",
     "build-plugin-settings": "webpack --mode production",
     "build": "run-s build-block build-plugin-settings",
@@ -52,14 +53,12 @@
   "dependencies": {
     "@wordpress/element": "6.16.0",
     "adm-zip": "0.5.16",
-    "archiver": "7.0.1",
-    "bootstrap": "5.3.3",
     "css-minimizer-webpack-plugin": "7.0.0",
-    "debounce": "2.2.0",
     "eslint": "8.57.1",
     "ignore": "7.0.3",
     "mini-css-extract-plugin": "2.9.2",
     "sass": "1.83.4",
-    "terser-webpack-plugin": "5.3.11"
+    "terser-webpack-plugin": "5.3.11",
+    "unused-package": "1.1.2"
   }
 }
